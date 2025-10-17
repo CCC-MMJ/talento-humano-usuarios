@@ -1,0 +1,72 @@
+networks:
+  global-network:
+    driver: bridge
+  auth-network:
+    driver: bridge
+
+services:
+  discovery-server:
+    container_name: discovery
+    build:
+      context: ./discovery
+      dockerfile: ../Dockerfile
+    profiles:
+      - default
+    networks:
+      - global-network
+    ports:
+      - "8761:8761"
+
+  gateway:
+    container_name: gateway
+    build:
+      context: ./gateway
+      dockerfile: ../Dockerfile
+    profiles:
+      - default
+    networks:
+      - default
+      - global-network
+    ports:
+      - "8080:8080"
+
+  auth-postgres:
+    image: postgres:15-alpine
+    container_name: auth_postgres_db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pwd2
+      POSTGRES_DB: authdb
+    profiles:
+      - default
+      - auth
+    networks:
+      - auth-network
+    volumes:
+      - auth_pgdata:/var/lib/postgresql/data
+
+  auth-service:
+    build:
+      context: ./auth
+      dockerfile: ../Dockerfile
+    depends_on:
+      - auth-postgres
+      - discovery-server
+    profiles:
+      - default
+      - auth
+    networks:
+      - auth-network
+      - global-network
+#    deploy:
+#      replicas: 1
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://auth-postgres:5432/authdb
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: pwd1
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+  #    ports:
+  #      - "8080:8080"
+
+volumes:
+  auth_pgdata:
