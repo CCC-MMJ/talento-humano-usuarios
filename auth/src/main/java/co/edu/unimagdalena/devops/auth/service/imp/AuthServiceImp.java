@@ -4,10 +4,11 @@ import co.edu.unimagdalena.devops.auth.dto.LoginRequestDto;
 import co.edu.unimagdalena.devops.auth.dto.LoginResponseDto;
 import co.edu.unimagdalena.devops.auth.dto.RegisterRequestDto;
 import co.edu.unimagdalena.devops.auth.dto.UserDto;
+import co.edu.unimagdalena.devops.auth.entity.Role;
 import co.edu.unimagdalena.devops.auth.entity.User;
 import co.edu.unimagdalena.devops.auth.mapper.UserMapper;
 import co.edu.unimagdalena.devops.auth.repository.UserRepository;
-import co.edu.unimagdalena.devops.auth.security.JwtService;
+import co.edu.unimagdalena.devops.auth.security.JwtIssuer;
 import co.edu.unimagdalena.devops.auth.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,48 +21,43 @@ import org.springframework.stereotype.Service;
 public class AuthServiceImp implements AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final UserMapper userMapper;
+    private final JwtIssuer jwtIssuer;
 
     @Override
-    public LoginResponseDto login(LoginRequestDto loginRequest) {
-        // Autentica las credenciales
+    public LoginResponseDto login(LoginRequestDto req) {
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getEmail(),
-                        loginRequest.getPassword()
-                )
+                new UsernamePasswordAuthenticationToken(req.getEmail(), req.getPassword())
         );
 
-        // Busca el usuario en la base de datos
-        User user = userRepository.findByEmail(loginRequest.getEmail())
+        User user = userRepository.findByEmail(req.getEmail())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        // Genera el token JWT
-        String jwtToken = jwtService.generateToken(user.getEmail(), user.getId());
+        var roles = user.getRoles().stream()
+                .map(Role::getName)
+                .map(Enum::name)
+                .map(r -> "ROLE_" + r)
+                .toList();
 
-        // Retorna la respuesta con token y datos del usuario
-        return new LoginResponseDto(jwtToken, userMapper.toDto(user));
+        String token = jwtIssuer.generate(user.getEmail(), user.getId(), roles);
+        return new LoginResponseDto(token, userMapper.toDto(user));
     }
 
     @Override
-    public UserDto register(RegisterRequestDto registerRequest) {
-        // Verifica que no exista el email
-        if (userRepository.findByEmail(registerRequest.getEmail()).isPresent()) {
+    public UserDto register(RegisterRequestDto req) {
+        if (userRepository.findByEmail(req.getEmail()).isPresent()) {
             throw new RuntimeException("Email ya registrado");
         }
 
-        // Crea el nuevo usuario
-        User user = new User();
-        user.setName(registerRequest.getName());
-        user.setEmail(registerRequest.getEmail());
-        user.setAddress(registerRequest.getAddress());
-        user.setPassword(passwordEncoder.encode(registerRequest.getPassword())); // Encripta la contraseña
+        User u = new User();
+        u.setName(req.getName());
+        u.setEmail(req.getEmail());
+        u.setAddress(req.getAddress());
+        u.setPassword(passwordEncoder.encode(req.getPassword()));
 
-        // Guarda en la base de datos
-        User savedUser = userRepository.save(user);
-
-        return userMapper.toDto(savedUser);
+        User saved = userRepository.save(u);
+        return userMapper.toDto(saved);
     }
 }
+
