@@ -1,4 +1,4 @@
-package co.edu.unimagdalena.devops.auth.security;
+package co.edu.unimagdalena.devops.gateway.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
