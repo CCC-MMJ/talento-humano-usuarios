@@ -1,10 +1,12 @@
 package co.edu.unimagdalena.devops.auth.dto;
 
+import java.util.Set;
+import java.util.UUID;
+
+import co.edu.unimagdalena.devops.auth.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -15,6 +17,7 @@ public class UserDto {
     private String name;
     private String address;
     private String email;
+    private Set<Role> roles;
 
     @Override
     public String toString() {
