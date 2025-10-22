@@ -34,11 +34,14 @@ public class Profile {
     @Column
     private String expectations;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "study_id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "profile")
     private List<Study> studies;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "certification_id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "profile")
     private List<Certification> certifications;
+
+    @OneToMany(mappedBy = "profile")
+    private List<Experiencie> experiencies;
+
+
 }
