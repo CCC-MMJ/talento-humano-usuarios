@@ -43,5 +43,10 @@ public class Profile {
     @OneToMany(mappedBy = "profile")
     private List<Experiencie> experiencies;
 
-
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "profile")
+    @JoinTable(name = "profile_skill",
+            joinColumns = @JoinColumn(name = "profile_id"),
+            inverseJoinColumns = @JoinColumn(name = "skill_id")
+    )
+    private List<Skill> skills;
 }
