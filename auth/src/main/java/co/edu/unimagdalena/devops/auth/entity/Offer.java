@@ -6,13 +6,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class offer {
+@Table(name = "offer")
+public class Offer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -21,6 +23,9 @@ public class offer {
     @ManyToOne
     @JoinColumn(name = "company_id", nullable = false)
     Company company;
+
+    @OneToMany(mappedBy = "offer")
+    List<Postulation> postulations;
 
     String title;
     String description;

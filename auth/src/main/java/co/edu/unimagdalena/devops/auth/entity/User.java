@@ -44,4 +44,7 @@ public class User {
     )
     private List<Company> companies;
 
+    @OneToMany(mappedBy = "user")
+    private List<Postulation> postulations;
+
 }

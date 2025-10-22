@@ -15,7 +15,7 @@ public class Company {
     UUID id;
 
     @OneToMany(mappedBy = "company")
-    private List<offer> offers;
+    private List<Offer> Offers;
 
     @ManyToMany(mappedBy = "companies")
     private List<User> users;

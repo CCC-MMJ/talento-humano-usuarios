@@ -1,5 +1,6 @@
 package co.edu.unimagdalena.devops.auth.dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,5 +19,9 @@ public class ProfileDto {
     private String phoneNumber;
     private String expectations;
     private List<UUID> idStudies;
+    private List<StudyDto> studies;
     private List<UUID> idCertifications;
+    private List<CertificationDto> certifications;
+    private List<UUID> idSkills;
+    private List<SkillDto> skills;
 }
