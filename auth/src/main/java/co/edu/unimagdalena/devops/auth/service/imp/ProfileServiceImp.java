@@ -45,13 +45,12 @@ public class ProfileServiceImp implements ProfileService {
     public ProfileDto createProfile(ProfileDto profileDto) {
         Profile profile = new Profile();
 
-        profile.setUser(userRepository.findById(profileDto.getIdUser()).orElseThrow());
+        profile.setUser(userRepository.findById(profileDto.getIdUser()).orElseThrow(() -> new RuntimeException("User not found with that Id!")));
         profile.setEducationLevel(profileDto.getEducationalLevel());
         profile.setLocality(profileDto.getLocality());
         profile.setPhoneNumber(profileDto.getPhoneNumber());
         profile.setExpectations(profileDto.getExpectations());
 
-        // Se Mapea los hijos (studies, certifications, experiences) del DTO a entidades
         List<Study> studies = new ArrayList<>();
 
         for (int i = 0; i < profileDto.getStudies().size(); i++) {
