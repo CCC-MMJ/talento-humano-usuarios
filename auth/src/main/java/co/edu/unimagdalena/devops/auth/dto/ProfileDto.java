@@ -22,6 +22,8 @@ public class ProfileDto {
     private List<StudyDto> studies;
     private List<UUID> idCertifications;
     private List<CertificationDto> certifications;
+    private List<UUID> idExperiences;
+    private List<ExperiencieDto> experiencies;
     private List<UUID> idSkills;
     private List<SkillDto> skills;
 }
