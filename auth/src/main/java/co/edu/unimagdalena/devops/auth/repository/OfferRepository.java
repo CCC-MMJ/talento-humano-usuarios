@@ -8,11 +8,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface OfferRepository extends JpaRepository<Offer, UUID> {
-    Optional<Offer> findById(UUID id);
-
     Optional<Offer> findByTitleAndDescription(String title, String description);
     List<Offer> findByTitleContaining(String title);
     List<Offer> findByDescriptionContaining(String description);
     List<Offer> findByTitleContainingAndDescriptionContaining(String title, String description);
-    Optional<Offer> findByTitle(UUID title, String description, UUID userId);
+    Optional<Offer> findByTitle(String title);
 }

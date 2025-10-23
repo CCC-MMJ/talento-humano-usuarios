@@ -14,4 +14,7 @@ public class PostulationDto {
     private UUID offerId;
     private LocalDate creationDate;
     private String status;
+    private String userName;
+    private String offerDescription;
+    private String offerTitle;
 }

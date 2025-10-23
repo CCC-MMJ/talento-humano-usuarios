@@ -7,9 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface ExperiencieRepository extends JpaRepository<Company, UUID> {
+public interface ExperiencieRepository extends JpaRepository<Experiencie, UUID> {
     Optional<Experiencie> findByProfileId(UUID profileId);
-    Optional<Experiencie> findByExperiencieId(UUID experiencieId);
+    Optional<Experiencie> findById(UUID experiencieId);
     Optional<Experiencie> findByCharge(String charge);
     Optional<Experiencie> findByDescription(String description);
 }
