@@ -18,8 +18,8 @@ public class Skill {
     private UUID id;
 
     @Column(nullable = false)
-    private String nombre;
+    private String name;
 
     @Column
-    private String tipo;
+    private String type;
 }
