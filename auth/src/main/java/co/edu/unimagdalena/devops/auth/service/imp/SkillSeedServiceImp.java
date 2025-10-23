@@ -14,9 +14,9 @@ public class SkillSeedServiceImp implements SkillSeedService {
 
     @Override
     @Transactional
-    public void seed(String nombre, String tipo) {
-        if (!skillRepository.existsByNombre(nombre)) {
-            skillRepository.save(new Skill(null, nombre, tipo));
+    public void seed(String name, String type) {
+        if (!skillRepository.existsByName(name)) {
+            skillRepository.save(new Skill(null, name, type));
         }
     }
 }
