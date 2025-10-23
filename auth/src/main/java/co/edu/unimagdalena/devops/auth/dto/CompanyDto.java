@@ -11,11 +11,11 @@ import java.util.UUID;
 @AllArgsConstructor
 public class CompanyDto {
     private UUID id;
-    private String nombre;
-    private String descripcion;
+    private String name;
+    private String description;
     private String sector;
     private String nit;
-    private String correoContacto;
-    private String telefono;
+    private String email;
+    private String numberPhone;
 }
 

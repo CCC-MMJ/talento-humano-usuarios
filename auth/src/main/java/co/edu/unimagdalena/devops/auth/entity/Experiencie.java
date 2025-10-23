@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.cglib.core.Local;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -26,8 +28,8 @@ public class Experiencie {
     private String companyName;
     private String charge;
     private String description;
-    private Date creationDate;
-    private Date expirationDate;
+    private LocalDate creationDate;
+    private LocalDate expirationDate;
 
 
 

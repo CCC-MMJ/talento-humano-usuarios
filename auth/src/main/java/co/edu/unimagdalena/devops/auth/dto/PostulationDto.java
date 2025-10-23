@@ -10,8 +10,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class PostulationDto {
     private UUID id;
-    private UUID usuarioId;
-    private UUID convocatoriaId;
-    private LocalDate fecha;
-    private String estado;
+    private UUID userId;
+    private UUID offerId;
+    private LocalDate creationDate;
+    private String status;
 }

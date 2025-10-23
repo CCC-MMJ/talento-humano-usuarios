@@ -12,13 +12,13 @@ import java.util.UUID;
 @AllArgsConstructor
 public class OfferDto {
     private UUID id;
-    private UUID empresaId;
-    private String titulo;
-    private String descripcion;
-    private String tipo;
-    private String requisitos;
-    private LocalDate fechaPublicacion;
-    private LocalDate fechaCierre;
-    private String estado;
+    private UUID companyId;
+    private String title;
+    private String description;
+    private String type;
+    private String requirements;
+    private LocalDate publicationDate;
+    private LocalDate ClosingDate;
+    private String status;
 }
 

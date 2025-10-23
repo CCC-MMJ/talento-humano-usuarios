@@ -14,9 +14,9 @@ import java.util.UUID;
 public class ExperiencieDto {
     private UUID id;
     private UUID profileId;
-    private String empresa;
-    private String cargo;
-    private String descripcion;
-    private LocalDate fechaInicio;
-    private LocalDate fechaFin;
+    private String companyName;
+    private String charge;
+    private String description;
+    private LocalDate creationDate;
+    private LocalDate expirationDate;
 }
