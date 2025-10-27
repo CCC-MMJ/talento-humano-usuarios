@@ -17,7 +17,8 @@ public class UserDto {
     private String name;
     private String address;
     private String email;
-    private Set<Role> roles;
+    private Set<UUID> roleIds;
+    private Set<UUID> companyIds;
 
     @Override
     public String toString() {

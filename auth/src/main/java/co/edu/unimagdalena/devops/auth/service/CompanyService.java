@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface CompanyService {
     CompanyDto createCompany(CompanyDto companyDto);
-    CompanyDto updateCompany(CompanyDto companyDto);
+    CompanyDto updateCompany(UUID id, CompanyDto companyDto);
     void deleteCompany(UUID id);
     CompanyDto getCompanyById(UUID id);
     List<CompanyDto> getAllCompanies();

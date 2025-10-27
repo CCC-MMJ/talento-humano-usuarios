@@ -28,7 +28,7 @@ public class CompanyServiceImp implements CompanyService {
     }
 
     @Override
-    public CompanyDto updateCompany(CompanyDto companyDto) {
+    public CompanyDto updateCompany(UUID id, CompanyDto companyDto) {
         return null;
     }
 
