@@ -6,6 +6,7 @@ import co.edu.unimagdalena.devops.auth.entity.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -60,8 +61,11 @@ public class AuthSecurityConfig {
     public SecurityFilterChain filter(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(a -> a
-                        .requestMatchers("/auth/**").permitAll()
-                        .anyRequest().authenticated())
+                    .requestMatchers("/auth/**").permitAll()
+                    .requestMatchers("/swagger-ui/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "api/v1/profile/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "api/v1/users/**").permitAll()
+                    .anyRequest().authenticated())
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider());
         return http.build();
