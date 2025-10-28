@@ -19,6 +19,5 @@ public class TestEnvironmentConfig {
         dotenv.entries().forEach(entry ->
             System.setProperty(entry.getKey(), entry.getValue())
         );
-        dotenv.entries().forEach(dotenvEntry -> System.out.println(dotenvEntry.getKey() + "=" + dotenvEntry.getValue()));
     }
 }
