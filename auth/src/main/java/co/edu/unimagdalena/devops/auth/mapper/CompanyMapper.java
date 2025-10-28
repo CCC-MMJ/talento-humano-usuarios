@@ -11,6 +11,4 @@ import org.mapstruct.MappingTarget;
 public interface CompanyMapper {
     CompanyDto toDto(Company company);
     Company toEntity(CompanyDto companyDto);
-    @Mapping(target = "id", ignore = true)
-    void updateCompany(CompanyDto companyDto, @MappingTarget Company company);
 }

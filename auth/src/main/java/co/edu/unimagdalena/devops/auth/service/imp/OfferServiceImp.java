@@ -70,7 +70,7 @@ public class OfferServiceImp implements OfferService {
 
        offerMapper.updateEntityFromDto(offerDto, offer);
 
-        return offerMapper.toDto(offerRepository.save(offer));
+       return offerMapper.toDto(offerRepository.save(offer));
 
     }
 
