@@ -10,5 +10,6 @@ public interface ProfileService {
     List<ProfileDto> getAllProfiles();
     Optional<ProfileDto> getProfileById(UUID id);
     ProfileDto createProfile(ProfileDto profileDto);
+    ProfileDto updateProfile(ProfileDto profileDto);
     void deleteProfileById(UUID id);
 }
