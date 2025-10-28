@@ -101,6 +101,13 @@ public class ProfileServiceImp implements ProfileService {
     }
 
     @Override
+    public ProfileDto updateProfile(ProfileDto profileDto) {
+        Profile profile = new Profile();
+
+        return profileMapper.toDto(profileRepository.save(profile));
+    }
+
+    @Override
     public void deleteProfileById(UUID id) {
         profileRepository.deleteById(id);
     }
