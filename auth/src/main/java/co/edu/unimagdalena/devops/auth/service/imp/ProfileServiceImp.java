@@ -1,15 +1,13 @@
 package co.edu.unimagdalena.devops.auth.service.imp;
 
-import co.edu.unimagdalena.devops.auth.dto.CertificationDto;
-import co.edu.unimagdalena.devops.auth.dto.ExperiencieDto;
-import co.edu.unimagdalena.devops.auth.dto.ProfileDto;
-import co.edu.unimagdalena.devops.auth.dto.StudyDto;
+import co.edu.unimagdalena.devops.auth.dto.*;
 import co.edu.unimagdalena.devops.auth.entity.Certification;
 import co.edu.unimagdalena.devops.auth.entity.Experiencie;
 import co.edu.unimagdalena.devops.auth.entity.Profile;
 import co.edu.unimagdalena.devops.auth.entity.Study;
 import co.edu.unimagdalena.devops.auth.mapper.ProfileMapper;
 import co.edu.unimagdalena.devops.auth.repository.ProfileRepository;
+import co.edu.unimagdalena.devops.auth.repository.SkillRepository;
 import co.edu.unimagdalena.devops.auth.repository.UserRepository;
 import co.edu.unimagdalena.devops.auth.service.ProfileService;
 import org.springframework.stereotype.Service;
@@ -23,11 +21,13 @@ import java.util.UUID;
 public class ProfileServiceImp implements ProfileService {
     private final ProfileRepository profileRepository;
     private final UserRepository userRepository;
+    private final SkillRepository skillRepository;
     private final ProfileMapper profileMapper;
 
-    public ProfileServiceImp(ProfileRepository profileRepository, UserRepository userRepository, ProfileMapper profileMapper) {
+    public ProfileServiceImp(ProfileRepository profileRepository, UserRepository userRepository, SkillRepository skillRepository, ProfileMapper profileMapper) {
         this.profileRepository = profileRepository;
         this.userRepository = userRepository;
+        this.skillRepository = skillRepository;
         this.profileMapper = profileMapper;
     }
 
@@ -39,6 +39,11 @@ public class ProfileServiceImp implements ProfileService {
     @Override
     public Optional<ProfileDto> getProfileById(UUID id) {
         return profileRepository.findById(id).map(profileMapper::toDto);
+    }
+
+    @Override
+    public List<ProfileDto> getProfilesBySkills(List<SkillDto> listSkills) {
+        return profileRepository.findProfilesBySkills_NameIn(listSkills).stream().map(profileMapper::toDto).toList();
     }
 
     @Override
