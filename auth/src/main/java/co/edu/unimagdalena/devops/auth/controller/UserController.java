@@ -17,7 +17,7 @@ import java.util.UUID;
 public class UserController {
     private final UserService userService;
 
-    @GetMapping()
+    @GetMapping("/all")
     public ResponseEntity<List<UserDto>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
@@ -29,7 +29,7 @@ public class UserController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/")
+    @PutMapping("/update")
     public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDto) {
         return ResponseEntity.ok(userService.updateUser(userDto));
     }
@@ -40,7 +40,7 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping()
+    @PostMapping("/create")
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
         return ResponseEntity.ok(userService.createUser(userDto));
     }
