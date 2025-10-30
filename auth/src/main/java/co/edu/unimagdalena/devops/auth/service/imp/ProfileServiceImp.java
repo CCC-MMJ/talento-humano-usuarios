@@ -97,13 +97,60 @@ public class ProfileServiceImp implements ProfileService {
         }
         profile.setExperiencies(experiencies);
 
-        // Los hijos se guardan automáticamente al guardar el perfil por el cascade
+        // Los hijos se guardan automÃ¡ticamente al guardar el perfil por el cascade
         return profileMapper.toDto(profileRepository.save(profile));
     }
 
     @Override
-    public ProfileDto updateProfile(ProfileDto profileDto) {
-        Profile profile = new Profile();
+    public ProfileDto updateProfile(ProfileDto profileDto, UUID id) {
+        Profile profile = profileRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found with that Id!"));
+
+        profileMapper.updateProfile(profileDto, profile);
+
+        List<Study> studies = new ArrayList<>();
+
+        for (int i = 0; i < profileDto.getStudies().size(); i++) {
+            Study study = new Study();
+
+            study.setProfile(profile);
+            study.setTitle(profile.getStudies().get(i).getTitle());
+            study.setInstitution(profile.getStudies().get(i).getInstitution());
+            study.setStartDate(profile.getStudies().get(i).getStartDate());
+            study.setEndDate(profile.getStudies().get(i).getEndDate());
+            study.setLevel(profile.getStudies().get(i).getLevel());
+
+            studies.add(study);
+        }
+        profile.setStudies(studies);
+
+        List<Certification> certifications = new ArrayList<>();
+
+        for (int i = 0; i < profileDto.getCertifications().size(); i++) {
+            Certification cert = new Certification();
+
+            cert.setProfile(profile);
+            cert.setName(profileDto.getCertifications().get(i).getName());
+            cert.setEntity(profileDto.getCertifications().get(i).getEntity());
+            cert.setDate(profileDto.getCertifications().get(i).getDate());
+
+            certifications.add(cert);
+        }
+        profile.setCertifications(certifications);
+
+        List<Experiencie> experiencies = new ArrayList<>();
+        for (ExperiencieDto expDto : profileDto.getExperiencies()) {
+            Experiencie exp = new Experiencie();
+
+            exp.setProfile(profile);
+            exp.setCompanyName(expDto.getCompanyName());
+            exp.setCharge(expDto.getCharge());
+            exp.setDescription(expDto.getDescription());
+            exp.setCreationDate(expDto.getCreationDate());
+            exp.setExpirationDate(expDto.getExpirationDate());
+
+            experiencies.add(exp);
+        }
+        profile.setExperiencies(experiencies);
 
         return profileMapper.toDto(profileRepository.save(profile));
     }
