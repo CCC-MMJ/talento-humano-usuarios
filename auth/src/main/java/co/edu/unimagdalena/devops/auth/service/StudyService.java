@@ -11,4 +11,7 @@ public interface StudyService {
     Optional<StudyDto> getStudyById(UUID id);
     StudyDto createStudy(StudyDto studyDto);
     void deleteStudyById(UUID id);
+    StudyDto addStudy(UUID profileId, StudyDto dto);
+    StudyDto updateStudy(UUID profileId, UUID studyId, StudyDto dto);
+    void deleteStudy(UUID profileId, UUID studyId);
 }
