@@ -9,4 +9,7 @@ import java.util.UUID;
 public interface CompanyRepository extends JpaRepository<Company, UUID> {
     Optional<Company> findByName(String name);
     Optional<Company> findBySector(String email);
+    Optional<Company> findByNit(String nit);
+    Optional<Company> findByEmail(String email);
+
 }

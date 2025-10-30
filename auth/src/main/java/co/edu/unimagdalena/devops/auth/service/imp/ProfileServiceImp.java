@@ -46,6 +46,7 @@ public class ProfileServiceImp implements ProfileService {
         Profile profile = new Profile();
 
         profile.setUser(userRepository.findById(profileDto.getIdUser()).orElseThrow(() -> new RuntimeException("User not found with that Id!")));
+
         profile.setEducationLevel(profileDto.getEducationalLevel());
         profile.setLocality(profileDto.getLocality());
         profile.setPhoneNumber(profileDto.getPhoneNumber());
