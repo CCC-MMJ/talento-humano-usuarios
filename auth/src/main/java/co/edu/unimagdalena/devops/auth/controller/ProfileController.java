@@ -1,11 +1,11 @@
 package co.edu.unimagdalena.devops.auth.controller;
 
 import co.edu.unimagdalena.devops.auth.dto.ProfileDto;
+import co.edu.unimagdalena.devops.auth.dto.SkillDto;
 import co.edu.unimagdalena.devops.auth.security.JwtIssuer;
 import co.edu.unimagdalena.devops.auth.service.ProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +27,11 @@ public class ProfileController {
     @GetMapping("/{id}")
     public ResponseEntity<ProfileDto> getProfileById(@PathVariable("id") UUID id) {
         return ResponseEntity.ok(profileService.getProfileById(id).orElseThrow());
+    }
+
+    @GetMapping("/{listSkills}")
+    public ResponseEntity<List<ProfileDto>> getProfilesBySkills(@PathVariable("listSkills") List<SkillDto> listSkills) {
+        return ResponseEntity.ok(profileService.getProfilesBySkills(listSkills));
     }
 
     @PostMapping("/create")

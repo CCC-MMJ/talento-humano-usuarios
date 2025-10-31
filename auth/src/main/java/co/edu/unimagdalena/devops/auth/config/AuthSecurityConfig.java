@@ -70,6 +70,7 @@ public class AuthSecurityConfig {
                                 "/swagger-resources/**",
                                 "/webjars/**"
                         ).permitAll()
+                        .requestMatchers("/api/v1/profile/create").authenticated()
                         .anyRequest().authenticated())
           
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
