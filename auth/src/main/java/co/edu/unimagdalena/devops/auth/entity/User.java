@@ -43,8 +43,4 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "company_id")
     )
     private List<Company> companies;
-
-    @OneToMany(mappedBy = "user")
-    private List<Postulation> postulations;
-
 }
