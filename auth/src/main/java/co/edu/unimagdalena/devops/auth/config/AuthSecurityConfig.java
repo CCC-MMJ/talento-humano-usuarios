@@ -70,6 +70,7 @@ public class AuthSecurityConfig {
                                 "/swagger-resources/**",
                                 "/webjars/**"
                         ).permitAll()
+                        //.requestMatchers("https://profiles-auth-fadbasetc6fja8hs.westus3-01.azurewebsites.net/auth/**").permitAll()
                         .requestMatchers("/api/v1/profile/create").authenticated()
                         .anyRequest().authenticated())
           
