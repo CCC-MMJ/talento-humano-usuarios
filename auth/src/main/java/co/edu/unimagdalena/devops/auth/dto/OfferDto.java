@@ -1,6 +1,5 @@
 package co.edu.unimagdalena.devops.auth.dto;
 
-import co.edu.unimagdalena.devops.auth.entity.Postulation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
