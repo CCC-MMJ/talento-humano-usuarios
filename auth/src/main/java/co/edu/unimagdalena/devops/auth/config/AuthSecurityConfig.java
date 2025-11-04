@@ -96,6 +96,7 @@ public class AuthSecurityConfig {
                 "https://profiles-auth-fadbasetc6fja8hs.azurewebsites.net",
                 "http://localhost:8080"
         ));
+        config.setAllowedOriginPatterns(List.of("*"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setExposedHeaders(List.of("Authorization"));
