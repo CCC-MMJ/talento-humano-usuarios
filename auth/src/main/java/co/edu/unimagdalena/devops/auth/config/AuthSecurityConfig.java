@@ -71,7 +71,7 @@ public class AuthSecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .cors(c -> c.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(a -> a
-                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/auth/**").not().authenticated()
                         .requestMatchers(
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
@@ -80,10 +80,9 @@ public class AuthSecurityConfig {
                                 "/swagger-resources/**",
                                 "/webjars/**"
                         ).permitAll()
-                        // .requestMatchers("https://profiles-auth-fadbasetc6fja8hs.westus3-01.azurewebsites.net/auth/**").permitAll()
                         .requestMatchers("/api/v1/profile/create").authenticated()
-                        .anyRequest().authenticated())
-          
+                        .anyRequest().authenticated()
+                )
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider());
         return http.build();
