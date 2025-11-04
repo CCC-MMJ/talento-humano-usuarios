@@ -21,10 +21,6 @@ public class StudyServiceImp implements StudyService {
     private final StudyMapper studyMapper;
     private ProfileRepository profileRepository;
 
-
-
-
-
     @Override
     public List<StudyDto> getAllStudies() {
         return studyRepository.findAll().stream().map(studyMapper::toDto).toList();
@@ -58,9 +54,6 @@ public class StudyServiceImp implements StudyService {
 
     @Override
     public StudyDto updateStudy(UUID profileId, UUID studyId, StudyDto dto) {
-        Profile profile = profileRepository.findById(profileId)
-                .orElseThrow(() -> new RuntimeException("Perfil no encontrado"));
-
         Study study = studyRepository.findById(studyId)
                 .orElseThrow(() -> new RuntimeException("Estudio no encontrado"));
 
