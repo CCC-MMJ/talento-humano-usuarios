@@ -59,23 +59,23 @@ public class AuthSecurityConfig {
 
     @Bean
     public SecurityFilterChain filter(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
+        http
+                .cors(c -> {}) // Activa CORS usando tu bean CorsConfigurationSource
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(a -> a
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // <---- CLAVE
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers(
-                                "/swagger-ui/**",
-                                "/swagger-ui.html",
-                                "/v3/api-docs/**",
-                                "/v3/api-docs.yaml",
-                                "/swagger-resources/**",
-                                "/webjars/**"
+                                "/swagger-ui/**", "/swagger-ui.html",
+                                "/v3/api-docs/**", "/v3/api-docs.yaml",
+                                "/swagger-resources/**", "/webjars/**"
                         ).permitAll()
-                        //.requestMatchers("https://profiles-auth-fadbasetc6fja8hs.westus3-01.azurewebsites.net/auth/**").permitAll()
                         .requestMatchers("/api/v1/profile/create").authenticated()
-                        .anyRequest().authenticated())
-          
+                        .anyRequest().authenticated()
+                )
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider());
         return http.build();
     }
+
 }

@@ -14,10 +14,21 @@ public class CorsConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOriginPatterns(List.of("http://localhost:8080", "https://profiles-auth-fadbasetc6fja8hs.westus3-01.azurewebsites.net"));
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowedHeaders(List.of("*"));
-        config.setExposedHeaders(List.of("Content-Range"));
+        // Lista orígenes exactos que SÍ harán llamadas al backend
+        config.setAllowedOrigins(List.of(
+                "https://profiles-auth-fadbasetc6fja8hs.westus3-01.azurewebsites.net",
+                "http://localhost:8080",
+                "http://localhost:3000"
+        ));
+        // Alternativa con patrones válidos (puerto comodín):
+        // config.setAllowedOriginPatterns(List.of(
+        //     "https://profiles-auth-fadbasetc6fja8hs.westus3-01.azurewebsites.net",
+        //     "http://localhost:[*]"
+        // ));
+
+        config.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
+        config.setAllowedHeaders(List.of("Authorization","Content-Type","Accept","Origin"));
+        config.setExposedHeaders(List.of("Authorization","Content-Range"));
         config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
