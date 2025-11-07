@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/profiles/{profileId}/studies")
+@RequestMapping("/api/v1/profiles/{profileId}/studies")
 @Tag(name = "Studies", description = "Operations related to profile studies")
 public class StudyController {
     @Autowired

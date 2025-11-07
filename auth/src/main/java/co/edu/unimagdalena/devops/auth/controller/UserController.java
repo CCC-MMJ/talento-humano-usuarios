@@ -19,7 +19,6 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/users")
-@CrossOrigin(origins = "http://localhost:3000")
 @Tag(name = "Users", description = "Operations related to users management")
 public class UserController {
     private final UserService userService;
