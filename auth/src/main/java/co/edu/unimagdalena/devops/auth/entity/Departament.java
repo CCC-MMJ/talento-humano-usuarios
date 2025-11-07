@@ -21,4 +21,6 @@ public class Departament {
 
     String name;
 
+    String a;
+
 }
