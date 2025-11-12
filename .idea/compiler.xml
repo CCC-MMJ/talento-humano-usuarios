@@ -21,6 +21,11 @@
         <module name="auth" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="discovery" target="17" />
+      <module name="gateway" target="21" />
+      <module name="talento-humano" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

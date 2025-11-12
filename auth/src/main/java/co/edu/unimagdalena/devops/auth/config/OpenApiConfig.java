@@ -36,7 +36,7 @@ import org.springframework.http.HttpHeaders;
                 ),
                 @Server(
                         description = "PROD SERVER",
-                        url = "jdbc:sqlserver://qa-devops-azure-sql-server.database.windows.net:1433"
+                        url = "https://profiles-auth-fadbasetc6fja8hs.westus3-01.azurewebsites.net"
                 )
         },
         security = @SecurityRequirement(
