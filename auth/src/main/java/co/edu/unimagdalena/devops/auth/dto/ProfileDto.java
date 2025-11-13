@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -35,6 +36,8 @@ public class ProfileDto {
     private LocalDateTime createdAt;
     @Schema(description = "Type zone", example = "urban or rural")
     private String typeZone;
+    @Schema(description = "birthdate", example = "2024-11-12")
+    private LocalDate birthdate;
     @Schema(description = "Identifiers of studies attached to this profile")
     private List<UUID> idStudies;
     @Schema(description = "List of study records")
