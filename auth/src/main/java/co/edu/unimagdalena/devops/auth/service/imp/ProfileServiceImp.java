@@ -61,6 +61,7 @@ public class ProfileServiceImp implements ProfileService {
         profile.setGender(profileDto.getGender());
         profile.setCreatedAt(LocalDateTime.now());
         profile.setTypeZone(profileDto.getTypeZone());
+        profile.setBirthdate(profileDto.getBirthdate());
 
         List<Study> studies = new ArrayList<>();
 
