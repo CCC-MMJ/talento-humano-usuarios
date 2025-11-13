@@ -12,6 +12,7 @@ import co.edu.unimagdalena.devops.auth.repository.UserRepository;
 import co.edu.unimagdalena.devops.auth.service.ProfileService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -56,6 +57,10 @@ public class ProfileServiceImp implements ProfileService {
         profile.setLocality(profileDto.getLocality());
         profile.setPhoneNumber(profileDto.getPhoneNumber());
         profile.setExpectations(profileDto.getExpectations());
+        profile.setSex(profileDto.getSex());
+        profile.setGender(profileDto.getGender());
+        profile.setCreatedAt(LocalDateTime.now());
+        profile.setTypeZone(profileDto.getTypeZone());
 
         List<Study> studies = new ArrayList<>();
 
@@ -63,11 +68,11 @@ public class ProfileServiceImp implements ProfileService {
             Study study = new Study();
 
             study.setProfile(profile);
-            study.setTitle(profile.getStudies().get(i).getTitle());
-            study.setInstitution(profile.getStudies().get(i).getInstitution());
-            study.setStartDate(profile.getStudies().get(i).getStartDate());
-            study.setEndDate(profile.getStudies().get(i).getEndDate());
-            study.setLevel(profile.getStudies().get(i).getLevel());
+            study.setTitle(profileDto.getStudies().get(i).getTitle());
+            study.setInstitution(profileDto.getStudies().get(i).getInstitution());
+            study.setStartDate(profileDto.getStudies().get(i).getStartDate());
+            study.setEndDate(profileDto.getStudies().get(i).getEndDate());
+            study.setLevel(profileDto.getStudies().get(i).getLevel());
 
             studies.add(study);
         }
@@ -118,11 +123,11 @@ public class ProfileServiceImp implements ProfileService {
             Study study = new Study();
 
             study.setProfile(profile);
-            study.setTitle(profile.getStudies().get(i).getTitle());
-            study.setInstitution(profile.getStudies().get(i).getInstitution());
-            study.setStartDate(profile.getStudies().get(i).getStartDate());
-            study.setEndDate(profile.getStudies().get(i).getEndDate());
-            study.setLevel(profile.getStudies().get(i).getLevel());
+            study.setTitle(profileDto.getStudies().get(i).getTitle());
+            study.setInstitution(profileDto.getStudies().get(i).getInstitution());
+            study.setStartDate(profileDto.getStudies().get(i).getStartDate());
+            study.setEndDate(profileDto.getStudies().get(i).getEndDate());
+            study.setLevel(profileDto.getStudies().get(i).getLevel());
 
             studies.add(study);
         }

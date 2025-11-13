@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,6 +36,18 @@ public class Profile {
 
     @Column
     private String expectations;
+
+    @Column
+    private String sex;
+
+    @Column
+    private String gender;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column
+    private String typeZone;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "profile")
     private List<Study> studies;
