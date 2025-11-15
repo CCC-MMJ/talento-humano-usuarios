@@ -18,9 +18,8 @@ public class Departament {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     UUID id;
-
     String name;
+    String country;
 
-    String a;
 
 }
