@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,6 +28,16 @@ public class ProfileDto {
     private String phoneNumber;
     @Schema(description = "Job expectations or objectives", example = "Looking for backend developer roles")
     private String expectations;
+    @Schema(description = "Sex of the person", example = "female")
+    private String sex;
+    @Schema(description = "Gender of the person", example = "transgender")
+    private String gender;
+    @Schema(description = "Date when the profile was created", example = "2024-11-12T10:30:00", accessMode = Schema.AccessMode.READ_ONLY)
+    private LocalDateTime createdAt;
+    @Schema(description = "Type zone", example = "urban or rural")
+    private String typeZone;
+    @Schema(description = "birthdate", example = "2024-11-12")
+    private LocalDate birthdate;
     @Schema(description = "Identifiers of studies attached to this profile")
     private List<UUID> idStudies;
     @Schema(description = "List of study records")
