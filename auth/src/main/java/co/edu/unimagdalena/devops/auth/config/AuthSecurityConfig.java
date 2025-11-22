@@ -1,8 +1,6 @@
 package co.edu.unimagdalena.devops.auth.config;
 
-import co.edu.unimagdalena.devops.auth.entity.ERole;
 import co.edu.unimagdalena.devops.auth.repository.UserRepository;
-import co.edu.unimagdalena.devops.auth.entity.Role;
 import co.edu.unimagdalena.devops.auth.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -10,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -27,8 +24,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 @Configuration
 @RequiredArgsConstructor
 public class AuthSecurityConfig {
@@ -44,15 +39,17 @@ public class AuthSecurityConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> userRepository.findByEmail(username)
-                .map(u -> new org.springframework.security.core.userdetails.User(
-                        u.getEmail(),
-                        u.getPassword(),
-                        u.getRoles().stream()
-                                .map(Role::getName)
-                                .map(ERole::name)
-                                .map(r -> new SimpleGrantedAuthority("ROLE_" + r))
-                                .toList()
-                ))
+                .map(u -> {
+                    // Convert userType to authority
+                    var authorities = u.getUserType() != null
+                            ? List.of(new SimpleGrantedAuthority("ROLE_" + u.getUserType().name()))
+                            : List.of(new SimpleGrantedAuthority("ROLE_APPLICANT")); // Default fallback
+
+                    return new org.springframework.security.core.userdetails.User(
+                            u.getEmail(),
+                            u.getPassword(),
+                            authorities);
+                })
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado: " + username));
     }
 
@@ -82,11 +79,10 @@ public class AuthSecurityConfig {
                                 "/v3/api-docs/**",
                                 "/v3/api-docs.yaml",
                                 "/swagger-resources/**",
-                                "/webjars/**"
-                        ).permitAll()
+                                "/webjars/**")
+                        .permitAll()
                         .requestMatchers("/api/v1/profile/create").authenticated()
-                        .anyRequest().authenticated()
-                )
+                        .anyRequest().authenticated())
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
@@ -99,8 +95,12 @@ public class AuthSecurityConfig {
         config.setAllowedOrigins(List.of(
                 "https://profiles-auth-fadbasetc6fja8hs.westus3-01.azurewebsites.net",
                 "https://profiles-auth-fadbasetc6fja8hs.azurewebsites.net",
-                "http://localhost:8080"
+                "https://talentolocal-notifcaciones-ggebgzhncpezf2e3.brazilsouth-01.azurewebsites.net",
+                "http://localhost:8080",
+                "http://localhost:3000",
+                "http://127.0.0.1:8000/"
         ));
+      
         config.setAllowedOriginPatterns(List.of("*"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));

@@ -22,10 +22,9 @@ public class UserDto {
     private String address;
     @Schema(description = "Email address", example = "jane.doe@example.com")
     private String email;
-    @Schema(description = "Associated role identifiers")
-    private Set<UUID> roleIds;
-    @Schema(description = "Associated company identifiers")
-    private Set<UUID> companyIds;
+    @Schema(description = "Type of user account", example = "applicant", allowableValues = { "applicant", "company",
+            "institution" })
+    private String type;
 
     @Override
     public String toString() {
@@ -34,6 +33,7 @@ public class UserDto {
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
+                ", type='" + type + '\'' +
                 '}';
     }
 }
