@@ -18,4 +18,7 @@ public class RegisterRequestDto {
     private String password;
     @Schema(description = "Home address of the user", example = "123 Main St, Springfield")
     private String address;
+    @Schema(description = "Type of user account", example = "applicant", allowableValues = { "applicant", "company",
+            "institution" })
+    private String type;
 }

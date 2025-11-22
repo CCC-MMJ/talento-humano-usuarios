@@ -4,11 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -17,30 +14,27 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    UUID id;
-    @Column
-    String name;
-    @Column
-    String address;
-    @Column
-    String email;
-    @Column
-    String password;
+        @Id
+        @GeneratedValue(strategy = GenerationType.UUID)
+        UUID id;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<Role> roles = new HashSet<>();
+        @Column
+        String name;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_company",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "company_id")
-    )
-    private List<Company> companies;
+        @Column
+        String address;
+
+        @Column
+        String email;
+
+        @Column
+        String password;
+
+        @Enumerated(EnumType.STRING)
+        @Column(name = "user_type")
+        private UserType userType;
+
+        @ManyToMany
+        @JoinTable(name = "user_company", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "company_id"))
+        private List<Company> companies;
 }
