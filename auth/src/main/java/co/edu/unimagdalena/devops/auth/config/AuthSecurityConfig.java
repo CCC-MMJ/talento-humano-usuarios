@@ -99,7 +99,8 @@ public class AuthSecurityConfig {
         config.setAllowedOrigins(List.of(
                 "https://profiles-auth-fadbasetc6fja8hs.westus3-01.azurewebsites.net",
                 "https://profiles-auth-fadbasetc6fja8hs.azurewebsites.net",
-                "http://localhost:8080"
+                "http://localhost:8080",
+                "http://localhost:3000"
         ));
         config.setAllowedOriginPatterns(List.of("*"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
