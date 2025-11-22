@@ -18,6 +18,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
@@ -66,7 +69,7 @@ public class AuthSecurityConfig {
     @Bean
     public SecurityFilterChain filter(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-                // .cors(c -> c.configurationSource(corsConfigurationSource())) // QUITAR ESTO
+                .cors(c -> c.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(a -> a
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
@@ -86,23 +89,22 @@ public class AuthSecurityConfig {
         return http.build();
     }
 
-    // @Bean
-    // public CorsConfigurationSource corsConfigurationSource() {
-    // CorsConfiguration config = new CorsConfiguration();
-    // config.setAllowedOrigins(List.of(
-    // "https://profiles-auth-fadbasetc6fja8hs.westus3-01.azurewebsites.net",
-    // "https://profiles-auth-fadbasetc6fja8hs.azurewebsites.net",
-    // "http://localhost:8080"
-    // ));
-    // config.setAllowedOriginPatterns(List.of("*"));
-    // config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-    // config.setAllowedHeaders(List.of("*"));
-    // config.setExposedHeaders(List.of("Authorization"));
-    // config.setAllowCredentials(true);
-    //
-    // UrlBasedCorsConfigurationSource source = new
-    // UrlBasedCorsConfigurationSource();
-    // source.registerCorsConfiguration("/**", config);
-    // return source;
-    // }
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(List.of(
+                "https://profiles-auth-fadbasetc6fja8hs.westus3-01.azurewebsites.net",
+                "https://profiles-auth-fadbasetc6fja8hs.azurewebsites.net",
+                "http://localhost:8080",
+                "http://localhost:3000"));
+        config.setAllowedOriginPatterns(List.of("*"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setExposedHeaders(List.of("Authorization"));
+        config.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
 }
