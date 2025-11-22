@@ -95,8 +95,12 @@ public class AuthSecurityConfig {
         config.setAllowedOrigins(List.of(
                 "https://profiles-auth-fadbasetc6fja8hs.westus3-01.azurewebsites.net",
                 "https://profiles-auth-fadbasetc6fja8hs.azurewebsites.net",
+                "https://talentolocal-notifcaciones-ggebgzhncpezf2e3.brazilsouth-01.azurewebsites.net",
                 "http://localhost:8080",
-                "http://localhost:3000"));
+                "http://localhost:3000",
+                "http://127.0.0.1:8000/"
+        ));
+      
         config.setAllowedOriginPatterns(List.of("*"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
