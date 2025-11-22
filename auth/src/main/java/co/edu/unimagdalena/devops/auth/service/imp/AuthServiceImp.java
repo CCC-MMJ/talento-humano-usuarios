@@ -4,8 +4,8 @@ import co.edu.unimagdalena.devops.auth.dto.LoginRequestDto;
 import co.edu.unimagdalena.devops.auth.dto.LoginResponseDto;
 import co.edu.unimagdalena.devops.auth.dto.RegisterRequestDto;
 import co.edu.unimagdalena.devops.auth.dto.UserDto;
-import co.edu.unimagdalena.devops.auth.entity.Role;
 import co.edu.unimagdalena.devops.auth.entity.User;
+import co.edu.unimagdalena.devops.auth.entity.UserType;
 import co.edu.unimagdalena.devops.auth.mapper.UserMapper;
 import co.edu.unimagdalena.devops.auth.repository.UserRepository;
 import co.edu.unimagdalena.devops.auth.security.JwtIssuer;
@@ -28,17 +28,15 @@ public class AuthServiceImp implements AuthService {
     @Override
     public LoginResponseDto login(LoginRequestDto req) {
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(req.getEmail(), req.getPassword())
-        );
+                new UsernamePasswordAuthenticationToken(req.getEmail(), req.getPassword()));
 
         User user = userRepository.findByEmail(req.getEmail())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        var roles = user.getRoles().stream()
-                .map(Role::getName)
-                .map(Enum::name)
-                .map(r -> "ROLE_" + r)
-                .toList();
+        // Use userType for JWT token generation
+        var roles = user.getUserType() != null
+                ? java.util.List.of("ROLE_" + user.getUserType().name())
+                : java.util.List.of("ROLE_APPLICANT"); // Default fallback
 
         String token = jwtIssuer.generate(user.getEmail(), user.getId(), roles);
         return new LoginResponseDto(token, userMapper.toDto(user));
@@ -50,14 +48,26 @@ public class AuthServiceImp implements AuthService {
             throw new RuntimeException("Email ya registrado");
         }
 
+        // Validate and parse user type
+        if (req.getType() == null || req.getType().trim().isEmpty()) {
+            throw new RuntimeException("El tipo de usuario es requerido");
+        }
+
+        UserType userType;
+        try {
+            userType = UserType.valueOf(req.getType().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Tipo de usuario inválido. Valores permitidos: applicant, company, institution");
+        }
+
         User u = new User();
         u.setName(req.getName());
         u.setEmail(req.getEmail());
         u.setAddress(req.getAddress());
         u.setPassword(passwordEncoder.encode(req.getPassword()));
+        u.setUserType(userType);
 
         User saved = userRepository.save(u);
         return userMapper.toDto(saved);
     }
 }
-
