@@ -1,0 +1,12 @@
+# Archivo de variables de entorno para PRODUCCIÓN (Azure)
+# NO modificar este archivo para desarrollo local
+# Para desarrollo local, usar: mvn spring-boot:run -Dspring-boot.run.profiles=local
+
+SPRING_DATASOURCE_URL="jdbc:sqlserver://qa-devops-azure-sql-server.database.windows.net:1433;databaseName=qa-devops-azure-sql;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;"
+SPRING_DATASOURCE_USERNAME="cbenavides@qa-devops-azure-sql-server"
+SPRING_DATASOURCE_PASSWORD="n@gXH15Ij^gTVyG3"
+SPRING_DATASOURCE_DRIVER_CLASS_NAME="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+
+# Optional Hibernate tuning
+SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT="org.hibernate.dialect.SQLServerDialect"
+SPRING_JPA_HIBERNATE_DDL_AUTO=update
