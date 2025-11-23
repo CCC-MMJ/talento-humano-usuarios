@@ -16,6 +16,6 @@ public class SkillDto {
     UUID id;
     @Schema(description = "Name of the skill", example = "Java")
     String name;
-    @Schema(description = "Type or category of the skill", example = "Technical")
+    @Schema(description = "Type or category of the skill", example = "Dura")
     String type;
 }
