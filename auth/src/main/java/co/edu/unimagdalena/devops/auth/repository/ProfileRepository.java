@@ -1,6 +1,5 @@
 package co.edu.unimagdalena.devops.auth.repository;
 
-import co.edu.unimagdalena.devops.auth.dto.SkillDto;
 import co.edu.unimagdalena.devops.auth.entity.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -18,5 +17,5 @@ public interface ProfileRepository extends JpaRepository<Profile, UUID> {
     @Override
     void deleteById(UUID id);
 
-    List<Profile> findProfilesBySkills_NameIn(List<SkillDto> skills);
+    List<Profile> findProfilesBySkills_NameIn(List<String> skillsNames);
 }

@@ -43,8 +43,8 @@ public class ProfileServiceImp implements ProfileService {
     }
 
     @Override
-    public List<ProfileDto> getProfilesBySkills(List<SkillDto> listSkills) {
-        return profileRepository.findProfilesBySkills_NameIn(listSkills).stream().map(profileMapper::toDto).toList();
+    public List<ProfileDto> getProfilesBySkills(List<String> skillNames) {
+        return profileRepository.findProfilesBySkills_NameIn(skillNames).stream().map(profileMapper::toDto).toList();
     }
 
     @Override

@@ -1,7 +1,6 @@
 package co.edu.unimagdalena.devops.auth.controller;
 
 import co.edu.unimagdalena.devops.auth.dto.ProfileDto;
-import co.edu.unimagdalena.devops.auth.dto.SkillDto;
 import co.edu.unimagdalena.devops.auth.security.JwtIssuer;
 import co.edu.unimagdalena.devops.auth.service.ProfileService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -45,13 +44,13 @@ public class ProfileController {
         return ResponseEntity.ok(profileService.getProfileById(id).orElseThrow());
     }
 
-    @GetMapping("/{listSkills}")
-    @Operation(summary = "Get profiles by skills", description = "Retrieve profiles that match the given list of skills")
+    @GetMapping("/skill")
+    @Operation(summary = "Get profiles by skills", description = "Retrieve profiles that match the given list of skill names; pass multiple names as query params, e.g. ?names=Java&names=Python")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Profiles found", content = @Content(schema = @Schema(implementation = ProfileDto.class)))
     })
-    public ResponseEntity<List<ProfileDto>> getProfilesBySkills(@PathVariable("listSkills") List<SkillDto> listSkills) {
-        return ResponseEntity.ok(profileService.getProfilesBySkills(listSkills));
+    public ResponseEntity<List<ProfileDto>> getProfilesBySkills(@RequestParam("names") List<String> skillNames) {
+        return ResponseEntity.ok(profileService.getProfilesBySkills(skillNames));
     }
 
     @PostMapping("/create")
