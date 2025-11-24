@@ -65,5 +65,16 @@ public class DepartamentController {
         return ResponseEntity.ok(departamentService.updateDepartament(id, departamentDto));
     }
 
+    @DeleteMapping("/delete/{id}")
+    @Operation(summary = "Delete departament", description = "Delete an existing departament by its ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Departament deleted successfully", content = @Content(schema = @Schema(implementation = DepartamentDto.class))),
+            @ApiResponse(responseCode = "400", description = "Validation error", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Departament not found", content = @Content)
+    })
+    public ResponseEntity<Void> deleteDepartament(@PathVariable UUID id) {
+        departamentService.deleteDepartament(id);
+        return ResponseEntity.noContent().build();
+    }
 }
 
