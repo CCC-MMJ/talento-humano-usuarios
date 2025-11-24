@@ -10,7 +10,5 @@
 
     <modules>
         <module>auth</module>
-        <module>discovery</module>
-        <module>gateway</module>
     </modules>
 </project>

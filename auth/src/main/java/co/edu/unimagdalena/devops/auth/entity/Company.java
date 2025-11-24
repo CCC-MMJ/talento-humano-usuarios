@@ -14,9 +14,6 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.UUID)
     UUID id;
 
-    @OneToMany(mappedBy = "company")
-    private List<Offer> Offers;
-
     @ManyToMany(mappedBy = "companies")
     private List<User> users;
 

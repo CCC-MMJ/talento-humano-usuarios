@@ -5,7 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -34,6 +38,21 @@ public class Profile {
     @Column
     private String expectations;
 
+    @Column
+    private String sex;
+
+    @Column
+    private String gender;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column
+    private String typeZone;
+
+    @Column
+    private LocalDate birthdate;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "profile")
     private List<Study> studies;
 
@@ -43,5 +62,10 @@ public class Profile {
     @OneToMany(mappedBy = "profile")
     private List<Experiencie> experiencies;
 
-
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "profile_skill",
+            joinColumns = @JoinColumn(name = "profile_id"),
+            inverseJoinColumns = @JoinColumn(name = "skill_id")
+    )
+    private Set<Skill> skills = new HashSet<>();
 }
